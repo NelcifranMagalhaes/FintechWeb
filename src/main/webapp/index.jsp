@@ -49,7 +49,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <a href="registers/user-registration.jsp" class="btn btn-primary">Adicionar usuário</a>
+                <a href="user-registration.jsp" class="btn btn-primary">Adicionar usuário</a>
             </div>
         </div>
     </div>

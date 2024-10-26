@@ -42,8 +42,22 @@ public class FintechUserServlet extends HttpServlet {
                 break;
             case "update":
                 update(req, resp);
-
+            case "delete":
+                delete(req, resp);
         }
+    }
+
+    private void delete(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("deleteCode"));
+        try {
+            dao.remove(id);
+            req.setAttribute("message", "Usuário removido!");
+        } catch (SQLException | EntityNotFoundException e) {
+            e.printStackTrace();
+            req.setAttribute("error", "Erro ao remover");
+        }
+        listUsers(req, resp);
     }
 
     private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -62,7 +76,6 @@ public class FintechUserServlet extends HttpServlet {
                     password,
                     createdAt
             );
-
             dao.add(user);
             req.setAttribute("message", "Usuário cadastrado!");
 
@@ -122,6 +135,7 @@ public class FintechUserServlet extends HttpServlet {
         List<FintechUser> usersList = null;
         try {
             usersList = dao.getAll();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

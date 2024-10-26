@@ -1,5 +1,7 @@
 package br.com.fintech.fintechweb.model;
 
+import br.com.fintech.fintechweb.util.EncryptionUtils;
+
 public class FintechUser {
     private int id;
     private String name;

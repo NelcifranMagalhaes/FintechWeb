@@ -13,12 +13,16 @@ public class TestFintechUser
         try {
             //FintechUserDao dao = getFintechUserDao();
             FintechUserDao dao = new FintechUserDao();
+            FintechUser fintechUser =  dao.search(17);
+            System.out.println("Senha: "+ fintechUser.getPasswordHash());
+            System.out.println("email: "+ fintechUser.getEmail());
+            System.out.println(dao.valideUser(fintechUser));
             //FintechUserDao dao = getFintechUserDao();
-            List<FintechUser> fintechUsers = dao.getAll();
-            for (FintechUser fintechUser: fintechUsers) {
-                System.out.println(fintechUser.getName()+ "\n" + fintechUser.getEmail());
-                System.out.println("-------------");
-            }
+//            List<FintechUser> fintechUsers = dao.getAll();
+//            for (FintechUser fintechUser: fintechUsers) {
+//                System.out.println(fintechUser.getName()+ "\n" + fintechUser.getEmail());
+//                System.out.println("-------------");
+//            }
 //            FintechUser fintechUser =  dao.search(21);
 //            fintechUser.setName("Katsuki Bakugo");
 //            fintechUser.setEmail("bakugo@gmail.com");
@@ -32,10 +36,12 @@ public class TestFintechUser
             dao.closeConnection();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private static FintechUserDao getFintechUserDao() throws SQLException, EntityNotFoundException {
+    private static FintechUserDao getFintechUserDao() throws Exception {
         FintechUserDao dao = new FintechUserDao();
         FintechUser first_user = new FintechUser("Midoria Izuku","midoria@gmail.com", "M", "18/11/1999",
                 "$2y$10$vHFK3x3TwOJZ2E67IxX2LOAYKmFUh", "30/09/2024" );

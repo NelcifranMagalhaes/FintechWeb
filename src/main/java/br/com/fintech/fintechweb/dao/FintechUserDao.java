@@ -3,6 +3,8 @@ package br.com.fintech.fintechweb.dao;
 import br.com.fintech.fintechweb.exception.EntityNotFoundException;
 import br.com.fintech.fintechweb.factory.ConnectionFactory;
 import br.com.fintech.fintechweb.model.FintechUser;
+import br.com.fintech.fintechweb.util.EncryptionUtils;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,16 +22,21 @@ public class FintechUserDao {
     public FintechUserDao() throws SQLException {
         connection = ConnectionFactory.getConnection();
     }
-    public void add(FintechUser fintechUser) throws SQLException {
+    public void add(FintechUser fintechUser) throws Exception {
         PreparedStatement stm = connection.prepareStatement("INSERT INTO fintech_user (id, name, email, gender, birth_date, password_hash, created_at) VALUES (seq_fintech_user.nextval, ?, ?, ?, ?, ?, ?)");
         stm.setString(1, fintechUser.getName());
         stm.setString(2, fintechUser.getEmail());
         stm.setString(3, fintechUser.getGender());
         stm.setString(4, fintechUser.getBirthDate());
-        stm.setString(5, fintechUser.getPasswordHash());
+        stm.setString(5, encryptPassword(fintechUser.getPasswordHash()));
         stm.setString(6, fintechUser.getCreatedAt());
         stm.executeUpdate();
     }
+
+    private String encryptPassword(String password) throws Exception {
+        return EncryptionUtils.encrypt(password);
+    }
+
     public FintechUser search(long id) throws SQLException, EntityNotFoundException {
         PreparedStatement stm = connection.prepareStatement("SELECT * FROM fintech_user WHERE id = ?");
         stm.setLong(1, id);
@@ -78,6 +85,31 @@ public class FintechUserDao {
         int line = stm.executeUpdate();
         if (line == 0)
             throw new EntityNotFoundException("Usuário não encontrado para ser removido");
+    }
+
+    public boolean valideUser(FintechUser fintechUser) throws SQLException {
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM fintech_user " + "WHERE email = ? AND password_hash = ?");
+        stm.setString(1, fintechUser.getEmail());
+        stm.setString(2, fintechUser.getPasswordHash());
+        ResultSet result = stm.executeQuery();
+        try {
+            if (result.next()){
+                System.out.println("existe");
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                stm.close();
+                result.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
 }

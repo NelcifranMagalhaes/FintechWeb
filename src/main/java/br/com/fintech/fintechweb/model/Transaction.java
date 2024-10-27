@@ -24,6 +24,13 @@ public abstract class Transaction {
         this.fintechUserId = fintechUserId;
     }
 
+    public Transaction(int id, double value, String createdAt, String description){
+        this.value = value;
+        this.createdAt = createdAt;
+        this.description = description;
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

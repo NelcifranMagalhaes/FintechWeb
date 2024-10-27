@@ -11,18 +11,17 @@ public class TestFintechUser
     public static void main( String[] args )
     {
         try {
+            FintechUserDao dao = getFintechUserDao();
+            // FintechUserDao dao = new FintechUserDao();
+//            FintechUser fintechUser =  dao.findByEmail("bbs@gmail.com");
+//            System.out.println("id: "+ fintechUser.getId());
+//            System.out.println("email: "+ fintechUser.getEmail());
             //FintechUserDao dao = getFintechUserDao();
-            FintechUserDao dao = new FintechUserDao();
-            FintechUser fintechUser =  dao.search(17);
-            System.out.println("Senha: "+ fintechUser.getPasswordHash());
-            System.out.println("email: "+ fintechUser.getEmail());
-            System.out.println(dao.validateUser(fintechUser));
-            //FintechUserDao dao = getFintechUserDao();
-//            List<FintechUser> fintechUsers = dao.getAll();
-//            for (FintechUser fintechUser: fintechUsers) {
-//                System.out.println(fintechUser.getName()+ "\n" + fintechUser.getEmail());
-//                System.out.println("-------------");
-//            }
+            List<FintechUser> fintechUsers = dao.getAll();
+            for (FintechUser fintechUser: fintechUsers) {
+                System.out.println(fintechUser.getName()+ "\n" + fintechUser.getEmail());
+                System.out.println("-------------");
+            }
 //            FintechUser fintechUser =  dao.search(21);
 //            fintechUser.setName("Katsuki Bakugo");
 //            fintechUser.setEmail("bakugo@gmail.com");
@@ -37,6 +36,8 @@ public class TestFintechUser
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         } catch (EntityNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

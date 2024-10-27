@@ -27,7 +27,12 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        FintechUser fintechUser = new FintechUser(email, password);
+        FintechUser fintechUser = null;
+        try {
+            fintechUser = new FintechUser(email, password);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         try {
             if (userDao.validateUser(fintechUser)) {

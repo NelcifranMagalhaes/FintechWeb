@@ -11,28 +11,32 @@ public class FintechUser {
     private String passwordHash;
     private String createdAt;
 
-    public FintechUser(int id, String name, String email, String gender, String birthDate, String passwordHash, String createdAt) {
+    public FintechUser(int id, String name, String email, String gender, String birthDate, String passwordHash, String createdAt) throws Exception {
         this.id = id;
         this.name = name;
         this.email = email;
         this.gender = gender;
         this.birthDate = birthDate;
-        this.passwordHash = passwordHash;
         this.createdAt = createdAt;
+        encryptPassword(passwordHash);
     }
 
-    public FintechUser(String name, String email, String gender, String birthDate, String passwordHash, String createdAt) {
+    public FintechUser(String name, String email, String gender, String birthDate, String passwordHash, String createdAt) throws Exception {
         this.name = name;
         this.email = email;
         this.gender = gender;
         this.birthDate = birthDate;
-        this.passwordHash = passwordHash;
         this.createdAt = createdAt;
+        encryptPassword(passwordHash);
     }
 
-    public FintechUser(String email, String passwordHash) {
+    public FintechUser(String email, String passwordHash) throws Exception {
         this.email = email;
-        this.passwordHash = passwordHash;
+        encryptPassword(passwordHash);
+    }
+
+    private void encryptPassword(String password) throws Exception {
+        this.passwordHash = EncryptionUtils.encrypt(password);
     }
 
     public String getBirthDate() {

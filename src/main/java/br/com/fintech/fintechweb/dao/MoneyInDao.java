@@ -28,6 +28,7 @@ public class MoneyInDao {
         stm.setString(3, moneyIn.getCreatedAt());
         stm.setInt(4, moneyIn.getFintechUserId());
         stm.executeUpdate();
+        stm.close();
     }
 
     private MoneyIn parserMoneyIn(ResultSet result) throws SQLException {
@@ -43,36 +44,41 @@ public class MoneyInDao {
         PreparedStatement stm = connection.prepareStatement("SELECT * FROM money_in WHERE id = ?");
         stm.setInt(1, id);
         ResultSet result = stm.executeQuery();
-        if (!result.next())
+        if (!result.next()) {
             throw new EntityNotFoundException("Receita não encontrada");
+        }
         return parserMoneyIn(result);
     }
 
-    public List<MoneyIn> getAll() throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM money_in");
+    public List<MoneyIn> getAll(int userId) throws SQLException {
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM money_in WHERE fintech_user_id = ?");
+        stm.setInt(1, userId);
         ResultSet result = stm.executeQuery();
         List<MoneyIn> listMoneyIn = new ArrayList<>();
         while (result.next()){
             listMoneyIn.add(parserMoneyIn(result));
         }
+        stm.close();
         return listMoneyIn;
     }
     public void update(MoneyIn moneyIn) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("UPDATE money_in SET label = ?, value = ?, created_at = ?, fintech_user_id = ? where id = ?");
+        PreparedStatement stm = connection.prepareStatement("UPDATE money_in SET label = ?, value = ?, created_at = ? where id = ?");
         stm.setString(1, moneyIn.getDescription());
         stm.setDouble(2, moneyIn.getValue());
         stm.setString(3, moneyIn.getCreatedAt());
-        stm.setInt(4, moneyIn.getFintechUserId());
-        stm.setLong(5, moneyIn.getId());
+        stm.setInt(4, moneyIn.getId());
         stm.executeUpdate();
+        stm.close();
     }
 
     public void remove(int id) throws SQLException, EntityNotFoundException {
         PreparedStatement stm = connection.prepareStatement("DELETE from money_in where id = ?");
         stm.setInt(1, id);
         int line = stm.executeUpdate();
-        if (line == 0)
+        if (line == 0) {
             throw new EntityNotFoundException("Receita não encontrada para ser removida");
+        }
+        stm.close();
     }
 
 }

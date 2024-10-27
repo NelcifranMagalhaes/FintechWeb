@@ -28,25 +28,26 @@ public class FintechUserDao {
         stm.setString(2, fintechUser.getEmail());
         stm.setString(3, fintechUser.getGender());
         stm.setString(4, fintechUser.getBirthDate());
-        stm.setString(5, encryptPassword(fintechUser.getPasswordHash()));
+        stm.setString(5, fintechUser.getPasswordHash());
         stm.setString(6, fintechUser.getCreatedAt());
         stm.executeUpdate();
+        stm.close();
     }
 
     private String encryptPassword(String password) throws Exception {
         return EncryptionUtils.encrypt(password);
     }
 
-    public FintechUser search(long id) throws SQLException, EntityNotFoundException {
+    public FintechUser search(long id) throws Exception {
         PreparedStatement stm = connection.prepareStatement("SELECT * FROM fintech_user WHERE id = ?");
         stm.setLong(1, id);
         ResultSet result = stm.executeQuery();
         if (!result.next())
-            throw new EntityNotFoundException("User não encontrado");
+            throw new EntityNotFoundException("Usuário não encontrado");
         return parserUser(result);
     }
 
-    public List<FintechUser> getAll() throws SQLException {
+    public List<FintechUser> getAll() throws Exception {
         PreparedStatement stm = connection.prepareStatement("SELECT * FROM fintech_user");
         ResultSet result = stm.executeQuery();
         List<FintechUser> listFintechUser = new ArrayList<>();
@@ -56,7 +57,7 @@ public class FintechUserDao {
         return listFintechUser;
     }
 
-    private FintechUser parserUser(ResultSet result) throws SQLException {
+    private FintechUser parserUser(ResultSet result) throws Exception {
         int id = result.getInt("id");
         String name = result.getString("name");
         String email = result.getString("email");
@@ -94,7 +95,6 @@ public class FintechUserDao {
         ResultSet result = stm.executeQuery();
         try {
             if (result.next()){
-                System.out.println("existe");
                 return true;
             }
 
@@ -102,6 +102,15 @@ public class FintechUserDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public FintechUser findByEmail(String email) throws Exception {
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM fintech_user WHERE email = ?");
+        stm.setString(1, email);
+        ResultSet result = stm.executeQuery();
+        if (!result.next())
+            throw new EntityNotFoundException("Usuário não encontrado");
+        return parserUser(result);
     }
 
 }

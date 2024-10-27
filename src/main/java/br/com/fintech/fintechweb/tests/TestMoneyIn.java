@@ -13,13 +13,13 @@ public class TestMoneyIn
     public static void main( String[] args )
     {
         try {
-            MoneyInDao dao = insertMoney();
-            //MoneyInDao dao = new MoneyInDao();
-            MoneyIn moneyInSearched =  dao.search(4);
-            System.out.println("Label: " + moneyInSearched.getDescription() + "\n Valor: " + moneyInSearched.getValue());
+            //MoneyInDao dao = insertMoney();
+            MoneyInDao dao = new MoneyInDao();
+//            MoneyIn moneyInSearched =  dao.search(4);
+//            System.out.println("Label: " + moneyInSearched.getDescription() + "\n Valor: " + moneyInSearched.getValue());
 
 
-            List<MoneyIn> moneyIns = dao.getAll();
+            List<MoneyIn> moneyIns = dao.getAll(4);
             System.out.println("Listando Receitas!");
             for (MoneyIn moneyIn: moneyIns) {
                 System.out.println("Label: " + moneyIn.getDescription() + "\n Valor: " + moneyIn.getValue());
@@ -36,8 +36,6 @@ public class TestMoneyIn
             dao.closeConnection();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
-        } catch (EntityNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 

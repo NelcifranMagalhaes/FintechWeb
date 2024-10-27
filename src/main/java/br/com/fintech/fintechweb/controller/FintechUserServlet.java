@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -41,7 +42,11 @@ public class FintechUserServlet extends HttpServlet {
                 create(req, resp);
                 break;
             case "update":
-                update(req, resp);
+                try {
+                    update(req, resp);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             case "delete":
                 delete(req, resp);
         }
@@ -68,25 +73,20 @@ public class FintechUserServlet extends HttpServlet {
             String birthdate = LocalDate.parse(req.getParameter("birthdate")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             String password = req.getParameter("password");
             String createdAt = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MMMM/yyyy"));
-            FintechUser user = new FintechUser(
-                    name,
-                    email,
-                    gender,
-                    birthdate,
-                    password,
-                    createdAt
-            );
+            FintechUser user = new FintechUser(name, email, gender, birthdate, password, createdAt);
             dao.add(user);
-            req.setAttribute("message", "Usuário cadastrado!");
-
+            HttpSession session = req.getSession();
+            session.setAttribute("userEmail", user.getEmail());
+            req.setAttribute("message", "Logado com sucesso!");
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch(Exception e){
             e.printStackTrace();
             req.setAttribute("error","Por favor, valide os dados");
+            req.getRequestDispatcher("user-registration.jsp").forward(req, resp);
         }
-        req.getRequestDispatcher("user-registration.jsp").forward(req, resp);
     }
 
-    private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void update(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("name");
         String email = req.getParameter("email");
@@ -126,6 +126,8 @@ public class FintechUserServlet extends HttpServlet {
             fintechUser = dao.search(id);
         } catch (SQLException | EntityNotFoundException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         req.setAttribute("fintechUser", fintechUser);
         req.getRequestDispatcher("edit-user.jsp").forward(req, resp);
@@ -136,7 +138,7 @@ public class FintechUserServlet extends HttpServlet {
         try {
             usersList = dao.getAll();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         req.setAttribute("fintechUsers", usersList);

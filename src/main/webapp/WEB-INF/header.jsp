@@ -11,7 +11,16 @@
           <a class="nav-link" aria-current="page" href="user-registration.jsp">Cadastro de Usuário</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="users?action=list-users">Listagem de Usuários</a>
+          <a class="nav-link" href="users?action=list-users">Usuários</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="moneyIns?action=list-moneyIns">Receitas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Despesas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Investimentos</a>
         </li>
       </ul>
       <c:if test="${empty userEmail}">

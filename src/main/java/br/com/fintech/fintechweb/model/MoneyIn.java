@@ -11,6 +11,9 @@ public class MoneyIn extends Transaction {
         super(id, value, createdAt, description, fintechUserId);
     }
 
+    public MoneyIn(int id, double value, String createdAt, String description) {
+        super(id, value, createdAt, description);
+    }
     @Override
     public String getType() {
         return "Receita";

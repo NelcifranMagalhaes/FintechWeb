@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -17,19 +17,24 @@
                  class="img-fluid" alt="Sample image">
           </div>
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <c:if test="${not empty error}">
+              <span class="navbar-text text-danger" style="margin-right:10px">
+                  ${error}
+              </span>
+            </c:if>
             <form action="login" method="post">
               <!-- Email input -->
               <div data-mdb-input-init class="form-outline mb-4">
-                <input type="email" id="form3Example3" class="form-control form-control-lg"
+                <input type="email" id="email-id" name="email" class="form-control form-control-lg"
                        placeholder="Enter a valid email address" />
-                <label class="form-label" for="form3Example3">Email address</label>
+                <label class="form-label" for="email-id">Email address</label>
               </div>
 
               <!-- Password input -->
               <div data-mdb-input-init class="form-outline mb-3">
-                <input type="password" id="form3Example4" class="form-control form-control-lg"
+                <input type="password" id="password-id" name="password" class="form-control form-control-lg"
                        placeholder="Enter password" />
-                <label class="form-label" for="form3Example4">Password</label>
+                <label class="form-label" for="password-id">Password</label>
               </div>
 
               <div class="d-flex justify-content-between align-items-center">

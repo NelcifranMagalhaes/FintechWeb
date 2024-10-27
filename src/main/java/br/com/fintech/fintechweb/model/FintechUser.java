@@ -29,6 +29,12 @@ public class FintechUser {
         this.passwordHash = passwordHash;
         this.createdAt = createdAt;
     }
+
+    public FintechUser(String email, String passwordHash) {
+        this.email = email;
+        this.passwordHash = passwordHash;
+    }
+
     public String getBirthDate() {
         return birthDate;
     }

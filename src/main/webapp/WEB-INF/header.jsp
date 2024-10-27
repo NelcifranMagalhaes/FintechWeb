@@ -14,10 +14,18 @@
           <a class="nav-link" href="users?action=list-users">Listagem de Usuários</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <c:if test="${empty userEmail}">
+        <span class="navbar-text text-danger" style="margin-right:10px">
+          <a href="./login.jsp" class="btn btn-outline-primary my-2 my-sm-0">Faça Login</a>
+            ${error}
+        </span>
+      </c:if>
+      <c:if test="${not empty userEmail }">
+        <span class="navbar-text">
+            ${userEmail}
+            <a href="login" class="btn btn-outline-primary my-2 my-sm-0">Sair</a>
+        </span>
+      </c:if>
     </div>
   </div>
 </nav>

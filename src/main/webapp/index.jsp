@@ -10,8 +10,15 @@
 <body>
 <%@include file="WEB-INF/header.jsp"%>
 <div class="container">
-    <div class="mt-5 ms-5 me-5">
-
+    <div class="container">
+        <c:if test="${empty userEmail}">
+            <h1 class="mt-3">Você não está autenticado!</h1>
+            <h5>Para acessar o sistema, identifique-se!</h5>
+        </c:if>
+        <c:if test="${not empty userEmail}">
+            <h1 class="mt-3">Bem-vindo a FiapStore!</h1>
+            <h5>Seu login foi efetuado com sucesso!</h5>
+        </c:if>
     </div>
 </div>
 <%@include file="WEB-INF/footer.jsp"%>

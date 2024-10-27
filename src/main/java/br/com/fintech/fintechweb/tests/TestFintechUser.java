@@ -16,7 +16,7 @@ public class TestFintechUser
             FintechUser fintechUser =  dao.search(17);
             System.out.println("Senha: "+ fintechUser.getPasswordHash());
             System.out.println("email: "+ fintechUser.getEmail());
-            System.out.println(dao.valideUser(fintechUser));
+            System.out.println(dao.validateUser(fintechUser));
             //FintechUserDao dao = getFintechUserDao();
 //            List<FintechUser> fintechUsers = dao.getAll();
 //            for (FintechUser fintechUser: fintechUsers) {

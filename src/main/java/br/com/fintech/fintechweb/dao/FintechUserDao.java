@@ -87,7 +87,7 @@ public class FintechUserDao {
             throw new EntityNotFoundException("Usuário não encontrado para ser removido");
     }
 
-    public boolean valideUser(FintechUser fintechUser) throws SQLException {
+    public boolean validateUser(FintechUser fintechUser) throws SQLException {
         PreparedStatement stm = connection.prepareStatement("SELECT * FROM fintech_user " + "WHERE email = ? AND password_hash = ?");
         stm.setString(1, fintechUser.getEmail());
         stm.setString(2, fintechUser.getPasswordHash());
@@ -100,14 +100,6 @@ public class FintechUserDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            try {
-                stm.close();
-                result.close();
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return false;
     }

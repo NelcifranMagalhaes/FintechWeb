@@ -70,4 +70,7 @@ public abstract class Transaction {
     public void setFintechUserId(int fintechUserId) {
         this.fintechUserId = fintechUserId;
     }
+
+    public abstract String getCategory();
+    public abstract void setCategory( String category );
 }

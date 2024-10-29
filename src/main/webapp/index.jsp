@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Despesas</h5>
                     <p class="card-text">Controle de Despesas.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="moneyOuts?action=list-moneyOuts" class="btn btn-primary">Lista de Despesas</a>
                 </div>
             </div>
         </div>

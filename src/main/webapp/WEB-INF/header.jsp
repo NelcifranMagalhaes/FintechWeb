@@ -17,7 +17,7 @@
           <a class="nav-link" href="moneyIns?action=list-moneyIns">Receitas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Despesas</a>
+          <a class="nav-link" href="moneyOuts?action=list-moneyOuts">Despesas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Investimentos</a>

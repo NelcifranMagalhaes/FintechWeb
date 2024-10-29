@@ -19,4 +19,14 @@ public class MoneyIn extends Transaction {
         return "Receita";
     }
 
+    @Override
+    public String getCategory() {
+        return "";
+    }
+
+    @Override
+    public void setCategory(String category) {
+
+    }
+
 }

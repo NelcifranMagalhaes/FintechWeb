@@ -1,9 +1,9 @@
 package br.com.fintech.fintechweb.controller;
 
 import br.com.fintech.fintechweb.dao.FintechUserDao;
-import br.com.fintech.fintechweb.dao.MoneyInDao;
+import br.com.fintech.fintechweb.dao.MoneyOutDao;
 import br.com.fintech.fintechweb.exception.EntityNotFoundException;
-import br.com.fintech.fintechweb.model.MoneyIn;
+import br.com.fintech.fintechweb.model.MoneyOut;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,15 +18,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@WebServlet("/moneyIns")
-public class MoneyInServlet extends HttpServlet {
-    private MoneyInDao dao;
-
+@WebServlet("/moneyOuts")
+public class MoneyOutServlet extends HttpServlet {
+    private MoneyOutDao dao;
     @Override
     public void init(ServletConfig config) throws ServletException {
 
         try {
-            dao = new MoneyInDao();
+            dao = new MoneyOutDao();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -63,17 +62,18 @@ public class MoneyInServlet extends HttpServlet {
     private void update(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
         String label = req.getParameter("description");
+        String category = req.getParameter("category");
         double value = Double.parseDouble(req.getParameter("value"));
         String createdAt = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MMMM/yyyy"));
-        MoneyIn moneyIn = new MoneyIn(id, value, createdAt, label);
+        MoneyOut moneyOut = new MoneyOut(id, value, createdAt, label, category);
         try {
-            dao.update(moneyIn);
-            req.setAttribute("message", "Receita Atualizada");
+            dao.update(moneyOut);
+            req.setAttribute("message", "Despesa Atualizada");
         } catch (SQLException e) {
             req.setAttribute("error", "Erro ao Atualizar");
             throw new RuntimeException(e);
         }
-        listMoneyIns(req, resp);
+        listMoneyOuts(req, resp);
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp)
@@ -81,25 +81,26 @@ public class MoneyInServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("deleteCode"));
         try {
             dao.remove(id);
-            req.setAttribute("message", "Receita removida com sucesso!");
+            req.setAttribute("message", "Despesa removida com sucesso!");
         } catch (SQLException | EntityNotFoundException e) {
             e.printStackTrace();
             req.setAttribute("error", "Erro ao remover");
         }
-        listMoneyIns(req, resp);
+        listMoneyOuts(req, resp);
     }
 
     private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
         try{
             String label = req.getParameter("description");
             double value = Double.parseDouble(req.getParameter("value"));
+            String category = req.getParameter("category");
             HttpSession session = req.getSession();
             int userId = findUserId(session.getAttribute("userEmail").toString());
             String createdAt = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MMMM/yyyy"));
 
-            MoneyIn moneyIn = new MoneyIn(value, createdAt, label, userId);
-            dao.add(moneyIn);
-            req.setAttribute("message", "Receita cadastrada!");
+            MoneyOut moneyOut = new MoneyOut(value, createdAt, label, userId, category);
+            dao.add(moneyOut);
+            req.setAttribute("message", "Despesa cadastrada!");
 
         } catch(Exception e){
             e.printStackTrace();
@@ -118,9 +119,9 @@ public class MoneyInServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = req.getParameter("action");
         switch (action){
-            case "list-moneyIns":
+            case "list-moneyOuts":
                 try {
-                    listMoneyIns(req, resp);
+                    listMoneyOuts(req, resp);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -133,18 +134,18 @@ public class MoneyInServlet extends HttpServlet {
 
     private void openForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        MoneyIn moneyIn = null;
+        MoneyOut moneyOut = null;
         try {
-            moneyIn = dao.search(id);
+            moneyOut = dao.search(id);
         } catch (SQLException | EntityNotFoundException e) {
             throw new RuntimeException(e);
         }
-        req.setAttribute("moneyIn", moneyIn);
-        req.getRequestDispatcher("edit-money-in.jsp").forward(req, resp);
+        req.setAttribute("moneyOut", moneyOut);
+        req.getRequestDispatcher("edit-money-out.jsp").forward(req, resp);
     }
 
-    private void listMoneyIns(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
-        List<MoneyIn> moneyInsList = null;
+    private void listMoneyOuts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        List<MoneyOut> moneyOutsList = null;
         HttpSession session = req.getSession();
         int userId = 0;
         try {
@@ -155,13 +156,13 @@ public class MoneyInServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         try {
-            moneyInsList = dao.getAll(userId);
+            moneyOutsList = dao.getAll(userId);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        req.setAttribute("moneyIns", moneyInsList);
-        req.getRequestDispatcher("list-money-ins.jsp").forward(req, resp);
+        req.setAttribute("moneyOuts", moneyOutsList);
+        req.getRequestDispatcher("list-money-outs.jsp").forward(req, resp);
         return;
     }
 }

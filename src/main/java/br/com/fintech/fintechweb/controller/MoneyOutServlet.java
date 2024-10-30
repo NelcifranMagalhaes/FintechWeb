@@ -106,7 +106,7 @@ public class MoneyOutServlet extends HttpServlet {
             e.printStackTrace();
             req.setAttribute("error","Por favor, valide os dados");
         }
-        req.getRequestDispatcher("money-in-registration.jsp").forward(req, resp);
+        req.getRequestDispatcher("money-out-registration.jsp").forward(req, resp);
     }
 
     private int findUserId(String email) throws Exception {

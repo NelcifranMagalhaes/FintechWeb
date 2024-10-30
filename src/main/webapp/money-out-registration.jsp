@@ -24,7 +24,7 @@
                 <div class="alert alert-danger ms-2 me-2 m-auto mt-2">${error}</div>
             </c:if>
             <div class="card-body">
-                <form action="moneyIns?action=create" method="post">
+                <form action="moneyOuts?action=create" method="post">
                     <div class="form-group">
                         <label for="id-label">Descrição</label>
                         <input type="text" name="description" id="id-label" class="form-control">

@@ -10,7 +10,14 @@
 <body>
 <%@include file="WEB-INF/header.jsp"%>
 <div class="container">
+    <c:forEach items="${moneyOuts}" var="moneyOut">
+        <h3>${moneyOut.category}</h3>
+        <h3>${moneyOut.total_value}</h3>
+    </c:forEach>
     <div class="row mt-5">
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
         <div class="col-sm-6">
             <div class="card bg-danger-subtle">
                 <div class="card-body">
@@ -51,5 +58,28 @@
 </div>
 <%@include file="WEB-INF/footer.jsp"%>
 <script src="./resources/js/bootstrap.bundle.js"></script>
+<script src="./resources/js/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>

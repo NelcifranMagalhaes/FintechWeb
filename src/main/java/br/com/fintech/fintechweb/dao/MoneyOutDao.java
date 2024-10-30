@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MoneyOutDao {
@@ -82,4 +83,22 @@ public class MoneyOutDao {
         }
         stm.close();
     }
+
+    public List<Object> getCountMoneyOut(int userId) throws SQLException {
+        PreparedStatement stm = connection.prepareStatement("SELECT category, SUM(value) AS total_value FROM money_out WHERE fintech_user_id = ? GROUP BY category");
+        stm.setInt(1, userId);
+        ResultSet result = stm.executeQuery();
+        List<Object> listMoneyOut = new ArrayList<>();
+        while (result.next()){
+            String category = result.getString("category");
+            double value = result.getDouble("total_value");
+            HashMap<String, Object> moneyOut = new HashMap<>();
+            moneyOut.put("category", category);
+            moneyOut.put("total_value", value);
+            listMoneyOut.add(moneyOut);
+        }
+        stm.close();
+        return listMoneyOut;
+    }
+
 }

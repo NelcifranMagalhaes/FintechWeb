@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Investimentos</h5>
                     <p class="card-text">Invista no seu futuro ou em sonhos.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="investments?action=list-investments" class="btn btn-primary">Lista de investimentos</a>
                 </div>
             </div>
         </div>

@@ -54,6 +54,7 @@ public class FintechUserDao {
         while (result.next()){
             listFintechUser.add(parserUser(result));
         }
+        stm.close();
         return listFintechUser;
     }
 
@@ -78,14 +79,17 @@ public class FintechUserDao {
         stm.setString(6, fintechUser.getCreatedAt());
         stm.setInt(7, fintechUser.getId());
         stm.executeUpdate();
+        stm.close();
     }
 
     public void remove(long id) throws SQLException, EntityNotFoundException {
         PreparedStatement stm = connection.prepareStatement("DELETE from fintech_user where id = ?");
         stm.setLong(1, id);
         int line = stm.executeUpdate();
-        if (line == 0)
+        if (line == 0) {
             throw new EntityNotFoundException("Usuário não encontrado para ser removido");
+        }
+        stm.close();
     }
 
     public boolean validateUser(FintechUser fintechUser) throws SQLException {

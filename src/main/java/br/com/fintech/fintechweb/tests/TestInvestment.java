@@ -14,7 +14,7 @@ public class TestInvestment {
 //            Investment investmentSearched =  dao.search(4);
 //            System.out.println("Label: " + investmentSearched.getDescription() + "\n Valor: " + investmentSearched.getValue());
 //
-            List<Investment> investments = dao.getAll();
+            List<Investment> investments = dao.getAll(1);
             System.out.println("Listando Investimentos!");
             for (Investment investment: investments) {
                 System.out.println("Label: " + investment.getDescription() + "\n Valor: " + investment.getValue());

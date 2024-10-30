@@ -22,6 +22,13 @@ public class Investment {
         this.fintechUserId = fintechUserId;
     }
 
+    public Investment(int id, double value, String createdAt, String description) {
+        this.id = id;
+        this.value = value;
+        this.createdAt = createdAt;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }

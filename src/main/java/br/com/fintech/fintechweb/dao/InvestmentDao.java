@@ -26,6 +26,7 @@ public class InvestmentDao {
         stm.setString(3, investment.getCreatedAt());
         stm.setInt(4, investment.getFintechUserId());
         stm.executeUpdate();
+        stm.close();
     }
 
     private Investment parserInvestment(ResultSet result) throws SQLException {
@@ -46,31 +47,35 @@ public class InvestmentDao {
         return parserInvestment(result);
     }
 
-    public List<Investment> getAll() throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM investment");
+    public List<Investment> getAll(int userId) throws SQLException {
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM investment WHERE fintech_user_id = ?");
+        stm.setInt(1, userId);
         ResultSet result = stm.executeQuery();
         List<Investment> listInvestment = new ArrayList<>();
         while (result.next()){
             listInvestment.add(parserInvestment(result));
         }
+        stm.close();
         return listInvestment;
     }
 
     public void update(Investment investment) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("UPDATE investment SET label = ?, value = ?, created_at = ?, fintech_user_id = ? where id = ?");
+        PreparedStatement stm = connection.prepareStatement("UPDATE investment SET label = ?, value = ?, created_at = ? where id = ?");
         stm.setString(1, investment.getDescription());
         stm.setDouble(2, investment.getValue());
         stm.setString(3, investment.getCreatedAt());
-        stm.setInt(4, investment.getFintechUserId());
-        stm.setLong(5, investment.getId());
+        stm.setLong(4, investment.getId());
         stm.executeUpdate();
+        stm.close();
     }
 
     public void remove(int id) throws SQLException, EntityNotFoundException {
         PreparedStatement stm = connection.prepareStatement("DELETE from investment where id = ?");
         stm.setInt(1, id);
         int line = stm.executeUpdate();
-        if (line == 0)
+        if (line == 0) {
             throw new EntityNotFoundException("Investimento não encontrado para ser removido");
+        }
+        stm.close();
     }
 }

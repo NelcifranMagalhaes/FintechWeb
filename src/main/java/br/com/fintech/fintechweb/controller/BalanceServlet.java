@@ -1,8 +1,9 @@
 package br.com.fintech.fintechweb.controller;
 
+import br.com.fintech.fintechweb.dao.BalanceDao;
 import br.com.fintech.fintechweb.dao.FintechUserDao;
-import br.com.fintech.fintechweb.dao.MoneyOutDao;
 import br.com.fintech.fintechweb.exception.EntityNotFoundException;
+import br.com.fintech.fintechweb.model.Balance;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,23 +16,25 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/index")
-public class indexServlet extends HttpServlet {
-    private MoneyOutDao dao;
+@WebServlet("/balances")
+public class BalanceServlet extends HttpServlet {
+    private BalanceDao dao;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
 
         try {
-            dao = new MoneyOutDao();
+            dao = new BalanceDao();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Object> moneyOutsList = null;
+
+        List<Balance> balancesList = null;
         HttpSession session = req.getSession();
         int userId = 0;
         try {
@@ -42,24 +45,18 @@ public class indexServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         try {
-            moneyOutsList = dao.getCountMoneyOut(userId);
+            balancesList = dao.getAll(userId);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        req.setAttribute("moneyOuts", moneyOutsList);
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        req.setAttribute("balances", balancesList);
+        req.getRequestDispatcher("list-balances.jsp").forward(req, resp);
         return;
     }
 
     private int findUserId(String email) throws Exception {
         FintechUserDao daoFinder = new FintechUserDao();
         return daoFinder.findByEmail(email).getId();
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("message", "Logado com sucesso!");
-        doGet(req, resp);
     }
 }

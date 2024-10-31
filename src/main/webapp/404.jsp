@@ -22,7 +22,7 @@
                             </h2>
                             <h3 class="h2 mb-2">Oops! Parece que você se perdeu.</h3>
                             <p class="mb-5">A página que você está procurando não existe.</p>
-                            <a class="btn bsb-btn-5xl btn-dark rounded-pill px-5 fs-6 m-0" href="index.jsp" role="button">Voltar para a tela inicial</a>
+                            <a class="btn bsb-btn-5xl btn-dark rounded-pill px-5 fs-6 m-0" href="index" role="button">Voltar para a tela inicial</a>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,6 @@
         </section>
     </div>
 </div>
-<%@include file="WEB-INF/footer.jsp"%>
 <script src="./resources/js/bootstrap.bundle.js"></script>
 </body>
 </html>

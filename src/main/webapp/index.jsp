@@ -10,10 +10,6 @@
 <body>
 <%@include file="WEB-INF/header.jsp"%>
 <div class="container">
-    <c:forEach items="${moneyOuts}" var="moneyOut">
-        <h3>${moneyOut.category}</h3>
-        <h3>${moneyOut.total_value}</h3>
-    </c:forEach>
     <div class="row mt-5">
         <div>
             <canvas id="myChart"></canvas>
@@ -50,7 +46,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Saldo</h5>
                     <p class="card-text">Seu saldo total.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="balances" class="btn btn-primary">Listagem de Saldo</a>
                 </div>
             </div>
         </div>
@@ -61,14 +57,25 @@
 <script src="./resources/js/chart.js"></script>
 <script>
     const ctx = document.getElementById('myChart');
+     const money = "${moneyOuts}";
+
+    const correctedDataString = money
+        .replace(/=/g, ':')
+        .replace(/(\w+):/g, '"$1":')
+        .replace(/:([^",}\]]+)/g, ':"$1"')
+        .replace(/"(\d+\.?\d*)"/g, '$1');
+
+    const data = JSON.parse(correctedDataString);
+    const totalValues = data.map(item => item.total_value);
+    const categories = data.map(item => item.category);
 
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: categories,
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Valor total de Despesas por categoria',
+                data: totalValues,
                 borderWidth: 1
             }]
         },

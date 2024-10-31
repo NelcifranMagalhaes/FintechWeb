@@ -45,8 +45,9 @@ public class BalanceDao {
         return parserBalance(result);
     }
 
-    public List<Balance> getAll() throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM balance");
+    public List<Balance> getAll(int userId) throws SQLException {
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM balance WHERE fintech_user_id = ?");
+        stm.setInt(1, userId);
         ResultSet result = stm.executeQuery();
         List<Balance> listBalance = new ArrayList<>();
         while (result.next()){

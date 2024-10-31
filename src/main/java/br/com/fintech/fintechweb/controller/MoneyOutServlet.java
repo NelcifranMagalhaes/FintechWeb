@@ -1,8 +1,10 @@
 package br.com.fintech.fintechweb.controller;
 
+import br.com.fintech.fintechweb.dao.BalanceDao;
 import br.com.fintech.fintechweb.dao.FintechUserDao;
 import br.com.fintech.fintechweb.dao.MoneyOutDao;
 import br.com.fintech.fintechweb.exception.EntityNotFoundException;
+import br.com.fintech.fintechweb.model.Balance;
 import br.com.fintech.fintechweb.model.MoneyOut;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -21,11 +23,13 @@ import java.util.List;
 @WebServlet("/moneyOuts")
 public class MoneyOutServlet extends HttpServlet {
     private MoneyOutDao dao;
+    private BalanceDao balanceDao;
     @Override
     public void init(ServletConfig config) throws ServletException {
 
         try {
             dao = new MoneyOutDao();
+            balanceDao = new BalanceDao();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -100,6 +104,8 @@ public class MoneyOutServlet extends HttpServlet {
 
             MoneyOut moneyOut = new MoneyOut(value, createdAt, label, userId, category);
             dao.add(moneyOut);
+            Balance balance = new Balance(-value, createdAt, userId);
+            balanceDao.add(balance);
             req.setAttribute("message", "Despesa cadastrada!");
 
         } catch(Exception e){

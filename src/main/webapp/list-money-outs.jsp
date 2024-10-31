@@ -128,7 +128,6 @@
     </div>
 </div>
 <%--    fim modal--%>
-<%@include file="WEB-INF/footer.jsp"%>
 <script src="./resources/js/bootstrap.bundle.js"></script>
 </body>
 </html>

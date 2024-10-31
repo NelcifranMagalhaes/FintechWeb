@@ -12,11 +12,13 @@
 <%@include file="WEB-INF/header.jsp"%>
 <div class="container">
   <div class="mt-5 ms-5 me-5">
-
-    <div class="card mb-3">
-      <div class="card-header">
-        Saldo
+    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+      <div class="card-header">Total</div>
+      <div class="card-body">
+        <h5 class="card-title"><fmt:formatNumber value="${totalValue}" currencySymbol="R$" type="currency"/> </h5>
       </div>
+    </div>
+    <div class="card mb-3">
       <div class="card-body">
         <table class="table table-striped table-bordered">
           <thead>

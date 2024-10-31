@@ -19,6 +19,9 @@
         <li class="nav-item">
           <a class="nav-link" href="investments?action=list-investments">Investimentos</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="balances">Saldo</a>
+        </li>
       </ul>
       <c:if test="${empty userEmail}">
         <span class="navbar-text text-danger" style="margin-right:10px">

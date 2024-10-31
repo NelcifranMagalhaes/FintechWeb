@@ -78,7 +78,7 @@ public class FintechUserServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("userEmail", user.getEmail());
             req.setAttribute("message", "Logado com sucesso!");
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/index").forward(req, resp);
         } catch(Exception e){
             e.printStackTrace();
             req.setAttribute("error","Por favor, valide os dados");

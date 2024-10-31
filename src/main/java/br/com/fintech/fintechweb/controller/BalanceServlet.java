@@ -50,7 +50,12 @@ public class BalanceServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        double total = balancesList.stream()
+                .mapToDouble(Balance::getValue)
+                .sum();
+
         req.setAttribute("balances", balancesList);
+        req.setAttribute("totalValue", total);
         req.getRequestDispatcher("list-balances.jsp").forward(req, resp);
         return;
     }

@@ -26,6 +26,7 @@ public class BalanceDao {
         stm.setString(2, balance.getCreatedAt());
         stm.setInt(3, balance.getFintechUserId());
         stm.executeUpdate();
+        stm.close();
     }
 
     private Balance parserBalance(ResultSet result) throws SQLException {
@@ -40,8 +41,10 @@ public class BalanceDao {
         PreparedStatement stm = connection.prepareStatement("SELECT * FROM balance WHERE id = ?");
         stm.setInt(1, id);
         ResultSet result = stm.executeQuery();
-        if (!result.next())
+        if (!result.next()) {
             throw new EntityNotFoundException("Saldo não encontrado");
+        }
+        stm.close();
         return parserBalance(result);
     }
 
@@ -53,6 +56,7 @@ public class BalanceDao {
         while (result.next()){
             listBalance.add(parserBalance(result));
         }
+        stm.close();
         return listBalance;
     }
 
@@ -63,14 +67,17 @@ public class BalanceDao {
         stm.setInt(3, balance.getFintechUserId());
         stm.setLong(4, balance.getId());
         stm.executeUpdate();
+        stm.close();
     }
 
     public void remove(int id) throws SQLException, EntityNotFoundException {
         PreparedStatement stm = connection.prepareStatement("DELETE from balance where id = ?");
         stm.setInt(1, id);
         int line = stm.executeUpdate();
-        if (line == 0)
+        if (line == 0) {
             throw new EntityNotFoundException("Saldo não encontrado para ser removido");
+        }
+        stm.close();
     }
 
 }

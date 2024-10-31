@@ -13,8 +13,8 @@ public class TestMoneyIn
     public static void main( String[] args )
     {
         try {
-            //MoneyInDao dao = insertMoney();
-            MoneyInDao dao = new MoneyInDao();
+            MoneyInDao dao = insertMoney();
+            //MoneyInDao dao = new MoneyInDao();
 //            MoneyIn moneyInSearched =  dao.search(4);
 //            System.out.println("Label: " + moneyInSearched.getDescription() + "\n Valor: " + moneyInSearched.getValue());
 

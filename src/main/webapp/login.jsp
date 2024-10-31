@@ -25,14 +25,14 @@
             <form action="login" method="post">
               <!-- Email input -->
               <div data-mdb-input-init class="form-outline mb-4">
-                <input type="email" id="email-id" name="email" class="form-control form-control-lg"
+                <input type="email" id="email-id" name="email" required class="form-control form-control-lg"
                        placeholder="Enter a valid email address" />
                 <label class="form-label" for="email-id">Email address</label>
               </div>
 
               <!-- Password input -->
               <div data-mdb-input-init class="form-outline mb-3">
-                <input type="password" id="password-id" name="password" class="form-control form-control-lg"
+                <input type="password" id="password-id" name="password" required class="form-control form-control-lg"
                        placeholder="Enter password" />
                 <label class="form-label" for="password-id">Password</label>
               </div>

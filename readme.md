@@ -10,7 +10,7 @@ This is a project to manage some expenses and income for one user logged.
 
 ## Tips
 - **The SQL script to generate the database's tables is `src/main/java/br/com/fintech/fintechweb/scripts/create-table.sql`**
-- You can change the user and password here `src/main/java/br/com/fintech/fintechweb/factory/ConnectionFactory.java`
+- You can change the user and password from Database here `src/main/java/br/com/fintech/fintechweb/factory/ConnectionFactory.java`
 ## Some views
 #### login
 ![alt text](/prints/login.png)

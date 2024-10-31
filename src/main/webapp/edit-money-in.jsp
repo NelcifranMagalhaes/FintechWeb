@@ -31,11 +31,11 @@
 
                     <div class="form-group">
                         <label for="id-description">Descrição</label>
-                        <input type="text" name="description" id="id-description" class="form-control" value="${moneyIn.description}">
+                        <input type="text" name="description" id="id-description" required class="form-control" value="${moneyIn.description}">
                     </div>
                     <div class="form-group">
                         <label for="id-value">Valor</label>
-                        <input type="number" name="value" id="id-value" step="any" class="form-control"  value="${moneyIn.value}">
+                        <input type="number" name="value" id="id-value" step="any" required class="form-control" value="${moneyIn.value}">
                     </div>
                     <input type="submit" value="Salvar" class="btn btn-primary mt-3">
                 </form>

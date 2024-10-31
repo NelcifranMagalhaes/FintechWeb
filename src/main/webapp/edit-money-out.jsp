@@ -31,11 +31,11 @@
 
                     <div class="form-group">
                         <label for="id-description">Descrição</label>
-                        <input type="text" name="description" id="id-description" class="form-control" value="${moneyOut.description}">
+                        <input type="text" name="description" id="id-description" required class="form-control" value="${moneyOut.description}">
                     </div>
                     <div class="form-group">
                         <label for="id-value">Valor</label>
-                        <input type="number" name="value" id="id-value" step="any" class="form-control"  value="${moneyOut.value}">
+                        <input type="number" name="value" id="id-value" step="any" required class="form-control"  value="${moneyOut.value}">
                     </div>
                     <div class="form-group">
                         <label for="id-category">Categoria</label>

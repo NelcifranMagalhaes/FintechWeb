@@ -27,11 +27,11 @@
         <form action="investments?action=create" method="post">
           <div class="form-group">
             <label for="id-label">Descrição</label>
-            <input type="text" name="description" id="id-label" class="form-control">
+            <input type="text" name="description" id="id-label" required class="form-control">
           </div>
           <div class="form-group">
             <label for="id-value">Valor</label>
-            <input type="number" name="value" id="id-value" step="any" class="form-control">
+            <input type="number" name="value" id="id-value" step="any" required class="form-control">
           </div>
           <input type="submit" value="Salvar" class="btn btn-primary mt-3">
         </form>

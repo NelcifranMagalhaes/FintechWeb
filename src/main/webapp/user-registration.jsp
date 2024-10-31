@@ -27,11 +27,11 @@
         <form action="users?action=create" method="post">
           <div class="form-group">
             <label for="id-name">Nome</label>
-            <input type="text" name="name" id="id-name" class="form-control">
+            <input type="text" name="name" id="id-name" required class="form-control">
           </div>
           <div class="form-group">
             <label for="id-email">Email</label>
-            <input type="text" name="email" id="id-email" class="form-control">
+            <input type="text" name="email" id="id-email" required class="form-control">
           </div>
           <div class="form-group">
             <label for="id-gender">Genêro</label>
@@ -44,11 +44,11 @@
           </div>
           <div class="form-group">
             <label for="id-birthdate">Data de Aniversário</label>
-            <input type="date" name="birthdate" id="id-birthdate" class="form-control">
+            <input type="date" name="birthdate" id="id-birthdate" required class="form-control">
           </div>
           <div class="form-group">
             <label for="id-password">Senha</label>
-            <input type="password" name="password" id="id-password" class="form-control">
+            <input type="password" name="password" id="id-password" required class="form-control">
           </div>
           <input type="submit" value="Salvar" class="btn btn-primary mt-3">
         </form>
